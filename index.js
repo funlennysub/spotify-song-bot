@@ -13,7 +13,7 @@ client.on("ready", () => {
 
 client.on("presenceUpdate", (oldPresence, newPresence) => {
    const user_to_track = client.users.cache.get(USER_ID);
-    if(oldPresence.user.id !== user_to_track.id || newPresence.user.id !== user_to_track.id) return;
+    if(oldPresence.user.id !== user_to_track.id) return;
     
     const string = newPresence.user.presence.activities.find(a => a.name === "Spotify" && a.type === "LISTENING");
     
