@@ -14,14 +14,17 @@ client.on("ready", () => {
 client.on("presenceUpdate", (oldPresence, newPresence) => {
    const user_to_track = client.users.cache.get(USER_ID);
     if(oldPresence.user.id !== user_to_track.id || newPresence.user.id !== user_to_track.id) return;
-    if(oldPresence.user.presence.activities.find(a => a.name === "Spotify" && a.type === "LISTENING") === undefined) return;
+    
+    const string = newPresence.user.presence.activities.find(a => a.name === "Spotify" && a.type === "LISTENING");
+    
+    if(string === undefined) return;
     const channel_to_send = client.guilds.cache.get(SERVER_ID).channels.cache.get(CHANNEL_ID);
 
-    const TRACK_NAME = newPresence.user.presence.activities.find(a => a.name === "Spotify" && a.type === "LISTENING").details;
-    const TRACK_AUTHOR = newPresence.user.presence.activities.find(a => a.name === "Spotify" && a.type === "LISTENING").state;
-    const ALBUM_NAME = newPresence.user.presence.activities.find(a => a.name === "Spotify" && a.type === "LISTENING").assets.largeText;
-    const TRACK_IMG = `https://i.scdn.co/image/${newPresence.user.presence.activities.find(a => a.name === "Spotify" && a.type === "LISTENING").assets.largeImage.slice(8)}`;
-    const TRACK_URL = `https://open.spotify.com/track/${newPresence.user.presence.activities.find(a => a.name === "Spotify" && a.type === "LISTENING").syncID}`;
+    const TRACK_NAME = string.details;
+    const TRACK_AUTHOR = string.state;
+    const ALBUM_NAME = string.assets.largeText;
+    const TRACK_IMG = `https://i.scdn.co/image/${string.assets.largeImage.slice(8)}`;
+    const TRACK_URL = `https://open.spotify.com/track/${string.syncID}`;
 
 
 
